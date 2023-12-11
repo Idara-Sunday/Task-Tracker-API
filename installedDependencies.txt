@@ -1,0 +1,8 @@
+npm i --save @nestjs/config
+ npm install --save @nestjs/typeorm typeorm mysql2
+  npm i --save class-validator class-transformer
+   npm i cookie-parser
+   npm i -D @types/cookie-parser
+    npm install --save @nestjs/jwt
+    npm i bcrypt
+    npm i -D @types/bcrypt
