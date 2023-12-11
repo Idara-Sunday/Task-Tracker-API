@@ -20,14 +20,14 @@ export class UserService {
       throw new HttpException('email has been registered with another user',401)
     }
 
-    const hashpassword = bcrypt.hash(password,34);
+    const hashpassword = await bcrypt.hash(password,34);
 
    const saveUser = await this.userService.save({
       email,
-      hashpassword,
+      password:hashpassword,
       ...rest
     })
-    delete saveUser.hashpassword
+    delete saveUser.password
 
     return {
       saveUser
