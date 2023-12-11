@@ -10,4 +10,4 @@ export class Base{
 
     @UpdateDateColumn()
     updated_At:Date;
-}
+} 
