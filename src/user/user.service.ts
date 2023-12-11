@@ -10,6 +10,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginUser } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
+import { CreateTaskDto } from './dto/create-task.dto';
 
 @Injectable()
 export class UserService {
@@ -49,6 +50,8 @@ export class UserService {
 
     const findUser = await this.userService.findOne({ where: { email } });
     const decryptPassword = await bcrypt.compare(password,findUser.password)
+    console.log(decryptPassword);
+    
 
     if (!decryptPassword) {
       throw new UnauthorizedException('Invalid credentials');
@@ -68,6 +71,12 @@ export class UserService {
     }
 
 
+  }
+
+  //  CREATING TASK
+
+  async createTask(payload:CreateTaskDto){
+    return await this.userService.save(payload)
   }
 
   findAll() {
