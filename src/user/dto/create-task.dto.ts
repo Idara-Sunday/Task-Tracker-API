@@ -1,21 +1,17 @@
 import { IsNotEmpty, IsString, IsStrongPassword } from "class-validator";
 
-export class CreateUserDto {
-    @IsNotEmpty()
-    @IsString()
-    email:string;
+export class CreateTaskDto {
+  
 
     @IsNotEmpty()
     @IsString()
-    firstName:string;
+    task_status:string
 
     @IsNotEmpty()
     @IsString()
-    @IsStrongPassword()
-    password:string;
-
+    task_title:string;
 
     @IsNotEmpty()
     @IsString()
-    lastName:string;
+    task_description:string;
 }
