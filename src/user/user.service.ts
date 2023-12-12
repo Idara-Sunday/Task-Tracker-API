@@ -49,6 +49,11 @@ export class UserService {
     const { email, password} = payload;
 
     const findUser = await this.userService.findOne({ where: { email } });
+
+    if(!findUser){
+      throw new UnauthorizedException('Invalid Credentials')
+    }
+     
     const decryptPassword = await bcrypt.compare(password,findUser.password)
     console.log(decryptPassword);
     
@@ -56,9 +61,7 @@ export class UserService {
     if (!decryptPassword) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    if(!findUser){
-      throw new UnauthorizedException('Invalid Credentials')
-    }
+ 
 
     const jwtPayload = {
       userEmail:findUser.email,
