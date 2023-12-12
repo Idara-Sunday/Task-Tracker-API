@@ -56,7 +56,7 @@ export class UserService {
     if (!decryptPassword) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    if(findUser.email !== email){
+    if(!findUser){
       throw new UnauthorizedException('Invalid Credentials')
     }
 
@@ -79,8 +79,10 @@ export class UserService {
     return await this.userService.save(payload)
   }
 
+  // FINDING ALL TASK
+
   findAll() {
-    return `This action returns all user`;
+    return ;
   }
 
   findOne(id: number) {

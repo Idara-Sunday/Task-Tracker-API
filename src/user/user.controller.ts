@@ -19,7 +19,7 @@ export class UserController {
   }
 
   @Post('createtask')
-  async createTask(payload:CreateTaskDto){
+  async createTask(@Body() payload:CreateTaskDto){
     return await this.userService.createTask(payload)
   }
   
