@@ -8,6 +8,7 @@ import { CreateTaskDto } from './dto/create-task.dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  
   @Post('signup')
   async registerUser(@Body() payload:CreateUserDto){
     return await this.userService.signUp(payload)
@@ -17,10 +18,11 @@ export class UserController {
   async loginUser(@Body() payload:LoginUser){
     return await this.userService.logIn(payload)
   }
-
+/*
   @Post('createtask')
   async createTask(@Body() payload:CreateTaskDto){
     return await this.userService.createTask(payload)
   }
+  */
   
 }

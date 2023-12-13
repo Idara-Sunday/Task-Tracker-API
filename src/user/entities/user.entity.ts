@@ -1,6 +1,7 @@
 import { Roles } from 'src/enum/roles';
-import { Column, Entity } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Base } from './base.entity';
+
 @Entity()
 export class User extends Base {
   @Column({unique:true})
@@ -15,14 +16,14 @@ export class User extends Base {
   @Column()
   lastName: string;
 
-  @Column()
-  task_title: string;
+  // @Column()
+  // task_title: string;
 
-  @Column()
-  task_description: string;
+  // @Column()
+  // task_description: string;
 
-  @Column()
-  task_status: string;
+  // @Column()
+  // task_status: string;
 
   @Column({
     type: 'enum',
@@ -31,3 +32,5 @@ export class User extends Base {
   })
   role: Roles;
 }
+
+

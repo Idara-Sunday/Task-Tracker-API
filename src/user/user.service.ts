@@ -11,6 +11,7 @@ import * as bcrypt from 'bcrypt';
 import { LoginUser } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { CreateTaskDto } from './dto/create-task.dto';
+import { createUserParams } from 'src/utils/types';
 
 @Injectable()
 export class UserService {
@@ -30,8 +31,8 @@ export class UserService {
         'email has been registered with another user',
         401,
       );
-    }
-
+    } 
+    
     const hashpassword = await bcrypt.hash(password, 12);
 
     const saveUser = await this.userService.save({
@@ -76,30 +77,8 @@ export class UserService {
 
   }
 
-  //  CREATING TASK
-
-  async createTask(payload:CreateTaskDto){
-    return await this.userService.save(payload)
-  }
-
-  // FINDING ALL TASK
-
-  findAll() {
-    return ;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
-  /*
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
-  */
+ 
+ 
 }
 
 /* 
