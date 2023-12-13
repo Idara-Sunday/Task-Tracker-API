@@ -101,3 +101,54 @@ export class UserService {
   }
   */
 }
+
+/* 
+// auth.guard.ts
+
+import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+import { JwtService } from '@nestjs/jwt';
+
+@Injectable()
+export class AuthGuard implements CanActivate {
+  constructor(
+    private readonly reflector: Reflector,
+    private readonly jwtService: JwtService,
+  ) {}
+
+  canActivate(context: ExecutionContext): boolean {
+    const isPublic = this.reflector.get<boolean>(
+      'isPublic',
+      context.getHandler(),
+    );
+
+    if (isPublic) {
+      return true; // If the route is marked as public, allow access without authentication
+    }
+
+    const request = context.switchToHttp().getRequest();
+    const token = this.extractJwtFromRequest(request);
+
+    if (!token) {
+      return false; // No token provided, deny access
+    }
+
+    try {
+      const decoded = this.jwtService.verify(token);
+      request.user = decoded;
+      return true; // Authentication successful
+    } catch (error) {
+      return false; // Invalid token, deny access
+    }
+  }
+
+  private extractJwtFromRequest(request): string {
+    // Extract JWT token from the Authorization header
+    const authHeader = request.headers.authorization;
+    if (authHeader && authHeader.split(' ')[0] === 'Bearer') {
+      return authHeader.split(' ')[1];
+    }
+    return null;
+  }
+}
+*/
