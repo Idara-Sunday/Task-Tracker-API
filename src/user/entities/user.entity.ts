@@ -1,6 +1,7 @@
 import { Roles } from 'src/enum/roles';
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Base } from './base.entity';
+import { Profile } from './profile';
 
 @Entity()
 export class User extends Base {
@@ -10,12 +11,10 @@ export class User extends Base {
   @Column()
   password: string;
 
-  @Column()
-  firstName: string;
-
-  @Column()
-  lastName: string;
-
+  @OneToOne(()=>Profile)
+  @JoinColumn()
+  profile:Profile;
+ 
   // @Column()
   // task_title: string;
 
@@ -25,12 +24,12 @@ export class User extends Base {
   // @Column()
   // task_status: string;
 
-  @Column({
-    type: 'enum',
-    enum: Roles,
-    default: Roles.user,
-  })
-  role: Roles;
+  // @Column({
+  //   type: 'enum',
+  //   enum: Roles,
+  //   default: Roles.user,
+  // })
+  // role: Roles;
 }
 
 

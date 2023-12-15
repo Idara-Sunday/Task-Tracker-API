@@ -32,7 +32,7 @@ export class UserService {
         401,
       );
     } 
-    
+
     const hashpassword = await bcrypt.hash(password, 12);
 
     const saveUser = await this.userService.save({
@@ -66,8 +66,7 @@ export class UserService {
 
     const jwtPayload = {
       userEmail:findUser.email,
-      userFirstName:findUser.firstName,
-      userLastName:findUser.lastName,
+     
     }
 
     return {

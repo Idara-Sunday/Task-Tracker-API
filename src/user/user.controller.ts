@@ -3,12 +3,13 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUser } from './dto/login-user.dto';
 import { CreateTaskDto } from './dto/create-task.dto';
+import { SkipThrottle } from '@nestjs/throttler';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  
+  @SkipThrottle()
   @Post('signup')
   async registerUser(@Body() payload:CreateUserDto){
     return await this.userService.signUp(payload)
