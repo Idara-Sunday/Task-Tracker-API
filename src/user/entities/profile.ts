@@ -1,9 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from "typeorm";
+import { User } from "./user.entity";
 
-@Entity({name:'users_profile'})
+@Entity()
 export class Profile{
     @PrimaryGeneratedColumn({type:'bigint'})
-    id:number;
+    id:number; 
 
     @Column()
     firstName: string;
@@ -11,9 +12,13 @@ export class Profile{
     @Column()
     lastName: string;
 
-    @Column()
+    @Column() 
     age:number;
 
     @Column()
     DOB:string;
+
+    // @OneToOne(()=>User)
+    // user:User
+    // joincolum
 }

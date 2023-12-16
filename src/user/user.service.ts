@@ -1,5 +1,6 @@
 import {
   HttpException,
+  HttpStatus,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -12,11 +13,14 @@ import { LoginUser } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { createUserParams } from 'src/utils/types';
+import { UserProfileDTO } from './dto/user.profile.dto';
+import { Profile } from './entities/profile';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private readonly userService: Repository<User>, private jwtService:JwtService
+    @InjectRepository(User) private readonly userService: Repository<User>, @InjectRepository(Profile) private readonly userProfile: Repository<Profile>,
+    private jwtService: JwtService,
   ) {}
   async signUp(payload: CreateUserDto) {
     // DESTRUCTURING THE INCOMING PAYLOAD
@@ -31,7 +35,7 @@ export class UserService {
         'email has been registered with another user',
         401,
       );
-    } 
+    }
 
     const hashpassword = await bcrypt.hash(password, 12);
 
@@ -47,37 +51,45 @@ export class UserService {
 
   // LOGIN  FUNCTIONALITY
   async logIn(payload: LoginUser) {
-    const { email, password} = payload;
+    const { email, password } = payload;
 
     const findUser = await this.userService.findOne({ where: { email } });
 
-    if(!findUser){
-      throw new UnauthorizedException('Invalid Credentials')
+    if (!findUser) {
+      throw new UnauthorizedException('Invalid Credentials');
     }
-     
-    const decryptPassword = await bcrypt.compare(password,findUser.password)
+
+    const decryptPassword = await bcrypt.compare(password, findUser.password);
     console.log(decryptPassword);
-    
 
     if (!decryptPassword) {
       throw new UnauthorizedException('Invalid credentials');
     }
- 
 
     const jwtPayload = {
-      userEmail:findUser.email,
-     
-    }
+      userEmail: findUser.email,
+    };
 
     return {
-      access_token: await this.jwtService.signAsync(jwtPayload)
-    }
-
-
+      access_token: await this.jwtService.signAsync(jwtPayload),
+    };
   }
 
- 
- 
+  async createProfile( id:any, payload: UserProfileDTO) {
+    const User = await this.userService.findOneBy({id});
+    if(!User){
+      throw new HttpException('User not found',HttpStatus.BAD_REQUEST);
+    }
+   
+    const newProfile = this.userProfile.create(payload);
+    const saveProfile = await this.userProfile.save(newProfile);
+    User.profile = saveProfile
+
+    const updateUser = await this.userService.save(User);
+    delete updateUser.password;
+    return updateUser
+    
+  }
 }
 
 /* 

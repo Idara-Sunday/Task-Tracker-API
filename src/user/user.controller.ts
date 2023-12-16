@@ -4,6 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUser } from './dto/login-user.dto';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { SkipThrottle } from '@nestjs/throttler';
+import { UserProfileDTO } from './dto/user.profile.dto';
 
 @Controller('user')
 export class UserController {
@@ -18,6 +19,12 @@ export class UserController {
   @Post('login')
   async loginUser(@Body() payload:LoginUser){
     return await this.userService.logIn(payload)
+  }
+
+
+  @Post(':id/profile')
+  async userProfile(@Param('id') id:number, @Body() payload:UserProfileDTO){
+    return await this.userService.createProfile(id,payload)
   }
 /*
   @Post('createtask')
