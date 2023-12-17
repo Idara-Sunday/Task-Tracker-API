@@ -45,8 +45,10 @@ export class UserService {
       ...rest,
     });
     delete saveUser.password;
+  
 
     return { saveUser };
+  
   }
 
   // LOGIN  FUNCTIONALITY
@@ -89,6 +91,9 @@ export class UserService {
     delete updateUser.password;
     return updateUser
     
+  }
+  async getUsers(){
+    return await this.userService.find({relations:['profile']})
   }
 }
 

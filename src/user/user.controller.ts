@@ -32,5 +32,9 @@ export class UserController {
     return await this.userService.createTask(payload)
   }
   */
+ @Get()
+ async getUsers(){
+  return await this.userService.getUsers()
+ }
   
 }
