@@ -17,14 +17,16 @@ import { UserProfileDTO } from './dto/user.profile.dto';
 import { Profile } from './entities/profile';
 import { PostDTO } from './dto/create-post.dto';
 import { Post } from './entities/posts.entity';
+import { Comments } from './entities/comments.entity';
+import { CommentDTO } from './dto/comment.dto';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private  userService: Repository<User>,
-    @InjectRepository(Profile)
-    private  userProfile: Repository<Profile>,
-    @InjectRepository(Post) private  userPost: Repository<Post>,
+    @InjectRepository(User) private readonly userService: Repository<User>,
+    @InjectRepository(Profile) private  userProfile: Repository<Profile>,
+    @InjectRepository(Post) private readonly userPost: Repository<Post>,
+    @InjectRepository(Comments) private readonly commentRepository:Repository<Comments>,
     private jwtService: JwtService,
   ) {}
   async signUp(payload: CreateUserDto) {
@@ -121,6 +123,13 @@ export class UserService {
     // const updateUser = this.userService.save(findUser)
 
     // return await this.userService.save(findUser)
+  }
+
+  // CREATING COMMENTS
+
+  async createComment(payload:CommentDTO){
+    const makeComment = this.commentRepository.create({...payload})
+    return await this.commentRepository.save(makeComment)
   }
 }
 

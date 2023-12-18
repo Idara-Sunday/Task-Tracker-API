@@ -8,7 +8,7 @@ export class Comments {
     id:number;
 
     @Column()
-    comment:string;
+    userComment:string;
 
     @ManyToMany(()=>Post,(post)=>post.comment)
     post:Post[];
