@@ -8,9 +8,10 @@ import { ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { Profile } from './entities/profile';
 import { Post } from './entities/posts.entity';
+import { Comments } from './entities/comments.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([User,Profile,Post]),
+  imports:[TypeOrmModule.forFeature([User,Profile,Post,Comments]),
   JwtModule.registerAsync({
     inject:[ConfigService],
     useFactory:(ConfigService:ConfigService) => ({

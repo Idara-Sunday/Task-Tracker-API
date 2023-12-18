@@ -12,16 +12,19 @@ export class User extends Base {
   @Column()
   password: string;
 
-  @OneToOne(()=>Profile)
+  @OneToOne(()=>Profile,(profile) => profile.user)
   @JoinColumn()
   profile:Profile;
  
-
   @OneToMany(()=>Post,(post)=> post.user)
   posts:Post[];
+
+
+
+  
   // @Column()
   // task_title: string;
-
+ 
   // @Column()
   // task_description: string;
 

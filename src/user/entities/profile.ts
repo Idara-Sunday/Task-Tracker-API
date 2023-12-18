@@ -18,7 +18,7 @@ export class Profile{
     @Column()
     DOB:string;
 
-    // @OneToOne(()=>User)
-    // user:User
-    // joincolum
+    @OneToOne(()=>User,(user)=>user.profile,{onDelete:'CASCADE'})
+    user:User
+    
 }

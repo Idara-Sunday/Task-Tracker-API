@@ -1,5 +1,6 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user.entity";
+import { Comments } from "./comments.entity";
 
 @Entity({name:'user_posts'})
 
@@ -13,7 +14,11 @@ export class Post {
     @Column()
     description:string;
     
-    @ManyToOne(()=>User,(user) => user.posts)
+    @ManyToOne(()=>User,(user) => user.posts,{onDelete:'SET NULL'})
     user:User;
+
+    @ManyToMany(()=>Comments,(comment)=>comment.post)
+    @JoinTable()
+    comment:Comments[];
 }
 
