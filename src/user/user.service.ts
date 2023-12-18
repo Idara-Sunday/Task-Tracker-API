@@ -97,7 +97,7 @@ export class UserService {
 
   // FETCHING ALL USERS FROM THE DATABASE
   async getUsers() {
-    return await this.userService.find({ relations: ['profile'] });
+    return await this.userService.find({ relations: ['profile','posts'] });
   }
 
   //  CREATING A POST
@@ -110,10 +110,10 @@ export class UserService {
     
     const makePost = this.userPost.create({
       ...payload,
-      user:{id}
+      user:{id} 
     });
 
-    return await this.userPost.save(makePost)
+    return this.userPost.save(makePost)
     // const makePost =  this.userPost.create(payload);
     // const savePost = await this.userPost.save(makePost);
     // findUser.posts = savePost;
