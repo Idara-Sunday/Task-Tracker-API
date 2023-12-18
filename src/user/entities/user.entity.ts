@@ -1,7 +1,8 @@
 import { Roles } from 'src/enum/roles';
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Base } from './base.entity';
 import { Profile } from './profile';
+import { Post } from './posts.entity';
 
 @Entity()
 export class User extends Base {
@@ -15,6 +16,9 @@ export class User extends Base {
   @JoinColumn()
   profile:Profile;
  
+
+  @OneToMany(()=>Post,(post)=> post.user)
+  posts:Post[];
   // @Column()
   // task_title: string;
 

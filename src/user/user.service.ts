@@ -15,11 +15,16 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { createUserParams } from 'src/utils/types';
 import { UserProfileDTO } from './dto/user.profile.dto';
 import { Profile } from './entities/profile';
+import { PostDTO } from './dto/create-post.dto';
+import { Post } from './entities/posts.entity';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private readonly userService: Repository<User>, @InjectRepository(Profile) private readonly userProfile: Repository<Profile>,
+    @InjectRepository(User) private  userService: Repository<User>,
+    @InjectRepository(Profile)
+    private  userProfile: Repository<Profile>,
+    @InjectRepository(Post) private  userPost: Repository<Post>,
     private jwtService: JwtService,
   ) {}
   async signUp(payload: CreateUserDto) {
@@ -45,10 +50,8 @@ export class UserService {
       ...rest,
     });
     delete saveUser.password;
-  
 
     return { saveUser };
-  
   }
 
   // LOGIN  FUNCTIONALITY
@@ -77,23 +80,47 @@ export class UserService {
     };
   }
 
-  async createProfile( id:any, payload: UserProfileDTO) {
-    const User = await this.userService.findOneBy({id});
-    if(!User){
-      throw new HttpException('User not found',HttpStatus.BAD_REQUEST);
+  async createProfile(id: any, payload: UserProfileDTO) {
+    const User = await this.userService.findOneBy({ id });
+    if (!User) {
+      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
     }
-   
+
     const newProfile = this.userProfile.create(payload);
     const saveProfile = await this.userProfile.save(newProfile);
-    User.profile = saveProfile
+    User.profile = saveProfile;
 
     const updateUser = await this.userService.save(User);
     delete updateUser.password;
-    return updateUser
-    
+    return updateUser;
   }
-  async getUsers(){
-    return await this.userService.find({relations:['profile']})
+
+  // FETCHING ALL USERS FROM THE DATABASE
+  async getUsers() {
+    return await this.userService.find({ relations: ['profile'] });
+  }
+
+  //  CREATING A POST
+  async createPost(id: number, payload:PostDTO) {
+    const findUser = await this.userService.findOneBy({ id });
+
+    if (!findUser) {
+      throw new HttpException('user not found', HttpStatus.BAD_REQUEST);
+    }
+    
+    const makePost = this.userPost.create({
+      ...payload,
+      user:{id}
+    });
+
+    return await this.userPost.save(makePost)
+    // const makePost =  this.userPost.create(payload);
+    // const savePost = await this.userPost.save(makePost);
+    // findUser.posts = savePost;
+
+    // const updateUser = this.userService.save(findUser)
+
+    // return await this.userService.save(findUser)
   }
 }
 
