@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm"
 import { Post } from "./posts.entity";
 
 @Entity()
@@ -8,7 +8,7 @@ export class Comments {
     id:number;
 
     @Column()
-    userComment:string;
+    text:string;
 
     @ManyToMany(()=>Post,(post)=>post.comment)
     post:Post[];

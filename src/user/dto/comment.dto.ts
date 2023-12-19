@@ -4,5 +4,5 @@ export class CommentDTO{
 
     @IsString()
     @IsNotEmpty()
-    userComment:string;
+    text:string;
 }

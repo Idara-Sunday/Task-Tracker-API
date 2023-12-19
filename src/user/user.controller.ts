@@ -44,9 +44,9 @@ export class UserController {
   return await this.userService.createPost( id,payload)
  }
 
- @Post('comment')
- async makeCOmment(@Body() payload:CommentDTO){
-  return await this.userService.createComment(payload)
+ @Post(':id/comment')
+ async makeCOmment(@Param('id') id:number,@Body() payload:CommentDTO){
+  return await this.userService.createComment(id,payload)
  }
   
 }

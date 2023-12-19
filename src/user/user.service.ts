@@ -2,6 +2,7 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -127,10 +128,24 @@ export class UserService {
 
   // CREATING COMMENTS
 
-  async createComment(payload:CommentDTO){
-    const makeComment = this.commentRepository.create({...payload})
-    return await this.commentRepository.save(makeComment)
+  async createComment( id:number,payload:CommentDTO){
+    const userpost = await this.userPost.findOneBy({id});
+    
+    if(!userpost){
+      throw new NotFoundException('Post Not found')
+    }
+    const makeComment = this.commentRepository.create({
+    ...payload
+    })
+
+    const saveComment = await this.userPost.save(makeComment)
+    
+    
+
+    // return await this.commentRepository.save(makeComment)
   }
+  
+
 }
 
 /* 
