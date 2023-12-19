@@ -100,7 +100,7 @@ export class UserService {
 
   // FETCHING ALL USERS FROM THE DATABASE
   async getUsers() {
-    return await this.userService.find({ relations: ['profile','posts'] });
+    return await this.userService.find({ relations: ['profile','posts','comment'] });
   }
 
   //  CREATING A POST
@@ -135,14 +135,15 @@ export class UserService {
       throw new NotFoundException('Post Not found')
     }
     const makeComment = this.commentRepository.create({
-    ...payload
+      ...payload,
     })
 
-    const saveComment = await this.userPost.save(makeComment)
-    
-    
+    const saveComment = await this.commentRepository.save(makeComment)
+     userpost.comment =[saveComment]
 
-    // return await this.commentRepository.save(makeComment)
+    
+   
+    return await this.userPost.save(userpost)
   }
   
 

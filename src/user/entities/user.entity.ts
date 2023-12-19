@@ -17,7 +17,7 @@ export class User extends Base {
   profile:Profile;
  
   @OneToMany(()=>Post,(post)=> post.user)
-  posts:Post[];
+  post:Post[];
 
 
 

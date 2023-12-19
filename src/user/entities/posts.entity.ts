@@ -14,12 +14,12 @@ export class Post {
     @Column()
     description:string;
     
-    @ManyToOne(()=>User,(user) => user.posts,{onDelete:'SET NULL'})
+    @ManyToOne(()=>User,(user) => user.post,{onDelete:'SET NULL'})
     @JoinColumn()
     user:User;
 
     @ManyToMany(()=>Comments,(comment)=>comment.post)
     @JoinTable()
     comment:Comments[];
-}
+}  
 
