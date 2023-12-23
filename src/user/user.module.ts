@@ -6,7 +6,7 @@ import { User } from './entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
-import { Profile } from './entities/profile';
+import { Profile } from './entities/profile.entity';
 import { Post } from './entities/posts.entity';
 import { Comments } from './entities/comments.entity';
 

@@ -15,7 +15,7 @@ import { JwtService } from '@nestjs/jwt';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { createUserParams } from 'src/utils/types';
 import { UserProfileDTO } from './dto/user.profile.dto';
-import { Profile } from './entities/profile';
+import { Profile } from './entities/profile.entity';
 import { PostDTO } from './dto/create-post.dto';
 import { Post } from './entities/posts.entity';
 import { Comments } from './entities/comments.entity';
@@ -100,17 +100,17 @@ export class UserService {
 
   // FETCHING ALL USERS FROM THE DATABASE
   async getUsers() {
-    return await this.userService.find({ relations: ['profile','posts','comment'] });
+    return await this.userService.find({ relations: ['profile','post'] });
   }
 
   //  CREATING A POST
   async createPost(id: number, payload:PostDTO) {
     const findUser = await this.userService.findOneBy({ id });
-
+ 
     if (!findUser) {
       throw new HttpException('user not found', HttpStatus.BAD_REQUEST);
     }
-    
+     
     const makePost = this.userPost.create({
       ...payload,
       user:{id} 

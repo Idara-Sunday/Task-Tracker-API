@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+// import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { dataSourceOptions } from 'config/typeOrm';
 
 @Module({
-    imports:[TypeOrmModule.forRootAsync({
+    imports:[
+        TypeOrmModule.forRoot(dataSourceOptions)
+        /*
+        TypeOrmModule.forRootAsync({
         useFactory:(ConfigService:ConfigService) => ({
             type:'mysql',
             port:ConfigService.getOrThrow('DB_PORT'),
@@ -15,6 +19,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
             autoLoadEntities:true
         }),
         inject:[ConfigService]
-    })]
+    })
+*/]
+    
 })
 export class DatabaseModule {}
