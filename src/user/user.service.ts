@@ -147,6 +147,23 @@ export class UserService {
   }
   
 
+  async deleteUser(id:number){
+    const user = await this.userService.findOne({where:{id}});
+
+    if(!user){
+      throw new HttpException('user not found',HttpStatus.NOT_FOUND);
+    }
+
+   const deleteUser = await this.userService.delete(user);
+
+   return {
+    message:`user ${user} successfully deleted`
+   }
+
+
+  }
+
+
 }
 
 /* 

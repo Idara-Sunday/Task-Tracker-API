@@ -49,4 +49,8 @@ export class UserController {
   return await this.userService.createComment(id,payload)
  }
   
+ @Delete(':id')
+ async deleteUser(@Param('id') id:number){
+  return await this.userService.deleteUser(id)
+ }
 }
