@@ -5,6 +5,7 @@ import { Post } from './posts.entity';
 
 @Entity()
 export class User {
+  
   @PrimaryGeneratedColumn()
   id:number;
 
@@ -20,8 +21,7 @@ export class User {
   @Column()
   password: string;
  
-  @OneToOne(()=>Profile,(profile) => profile.user) 
-  @JoinColumn()
+  @OneToOne(()=>Profile,(profile) => profile.user,) 
   profile:Profile;
  
   @OneToMany(()=>Post,(post)=> post.user)

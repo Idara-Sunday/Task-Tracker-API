@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  ClassSerializerInterceptor,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUser } from './dto/login-user.dto';
@@ -14,43 +24,50 @@ export class UserController {
 
   @SkipThrottle()
   @Post('signup')
-  async registerUser(@Body() payload:CreateUserDto){
-    return await this.userService.signUp(payload)
+  async registerUser(@Body() payload: CreateUserDto) {
+    return await this.userService.signUp(payload);
   }
 
   @Post('login')
-  async loginUser(@Body() payload:LoginUser){
-    return await this.userService.logIn(payload)
+  async loginUser(@Body() payload: LoginUser) {
+    return await this.userService.logIn(payload);
   }
-
 
   @Post(':id/profile')
-  async userProfile(@Param('id') id:number, @Body() payload:UserProfileDTO){
-    return await this.userService.createProfile(id,payload)
+  async userProfile(@Param('id') id: number, @Body() payload: UserProfileDTO) {
+    return await this.userService.createProfile(id, payload);
   }
-/*
+  /*
   @Post('createtask')
   async createTask(@Body() payload:CreateTaskDto){
     return await this.userService.createTask(payload)
   }
   */
- @Get()
- async getUsers(){
-  return await this.userService.getUsers()
- }
 
- @Post(':id/posts')
- async makePost(@Param('id') id:number, @Body() payload:PostDTO){
-  return await this.userService.createPost( id,payload)
- }
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get()
+  async getUsers() {
+    return await this.userService.getUsers();
+  }
 
- @Post(':id/comment')
- async makeCOmment(@Param('id') id:number,@Body() payload:CommentDTO){
-  return await this.userService.createComment(id,payload)
- }
-  
- @Delete(':id')
- async deleteUser(@Param('id') id:number){
-  return await this.userService.deleteUser(id)
- }
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get(':id')
+  async findUser(@Param('id') id: number) {
+    return await this.userService.getUserbyFirstname(id);
+  }
+
+  @Post(':id/posts')
+  async makePost(@Param('id') id: number, @Body() payload: PostDTO) {
+    return await this.userService.createPost(id, payload);
+  }
+
+  @Post(':id/comment')
+  async makeCOmment(@Param('id') id: number, @Body() payload: CommentDTO) {
+    return await this.userService.createComment(id, payload);
+  }
+
+  @Delete(':id')
+  async deleteUser(@Param('id') id: number) {
+    return await this.userService.deleteUser(id);
+  }
 }

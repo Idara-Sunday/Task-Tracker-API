@@ -1,24 +1,24 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from "typeorm";
-import { User } from "./user.entity";
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
+import { User } from './user.entity';
 
 @Entity()
-export class Profile{
-    @PrimaryGeneratedColumn({type:'bigint'})
-    id:number; 
+export class Profile {
+  @PrimaryGeneratedColumn({ type: 'bigint' })
+  id: number;
 
-    @Column()
-    firstName: string;
-  
-    @Column()
-    lastName: string;
+  @Column()
+  firstName: string;
 
-    @Column() 
-    age:number;
+  @Column()
+  lastName: string;
 
-    @Column()
-    DOB:string;
+  @Column()
+  age: number;
 
-    @OneToOne(()=>User,(user)=>user.profile,{onDelete:'CASCADE'})
-    user:User
-    
+  @Column()
+  DOB: string;
+
+  @OneToOne(() => User, (user) => user.profile,{onDelete:'CASCADE'})
+  @JoinColumn()
+  user: User;
 }

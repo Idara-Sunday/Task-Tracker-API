@@ -8,7 +8,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto, SerializedUser } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginUser } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
@@ -20,6 +20,7 @@ import { PostDTO } from './dto/create-post.dto';
 import { Post } from './entities/posts.entity';
 import { Comments } from './entities/comments.entity';
 import { CommentDTO } from './dto/comment.dto';
+import { plainToClass } from 'class-transformer';
 
 @Injectable()
 export class UserService {
@@ -100,8 +101,29 @@ export class UserService {
 
   // FETCHING ALL USERS FROM THE DATABASE
   async getUsers() {
-    return await this.userService.find({ relations: ['profile','post'] });
+
+    const findUsers = await this.userService.find();
+    // return findUsers.map((users)=>plainToClass(SerializedUser,users)) || This method is not a standard way of SERIALIZING data
+
+    return findUsers.map((users)=> new SerializedUser(users)) // this is the standard method of SERIALIZING data
+    
+    // return await this.userService.find()
+    // return await this.userService.find({ relations: ['profile','post'] });
   }
+
+
+  async getUserbyFirstname(id:number){
+
+    const findUser = await this.userService.findOneBy({id});
+
+    if(!findUser){
+      throw new HttpException('User not found',HttpStatus.NOT_FOUND)
+    }
+    return new SerializedUser(findUser)
+
+
+  }
+
 
   //  CREATING A POST
   async createPost(id: number, payload:PostDTO) {
@@ -148,20 +170,16 @@ export class UserService {
   
 
   async deleteUser(id:number){
-    const user = await this.userService.findOne({where:{id}});
+    const user = await this.userService.findOneBy({id});
 
     if(!user){
       throw new HttpException('user not found',HttpStatus.NOT_FOUND);
     }
 
-   const deleteUser = await this.userService.delete(user);
-
-   return {
-    message:`user ${user} successfully deleted`
-   }
-
-
-  }
+   return  this.userService.delete(id);
+   
+   
+  } 
 
 
 }
