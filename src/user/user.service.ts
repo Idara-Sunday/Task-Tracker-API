@@ -112,17 +112,17 @@ export class UserService {
   }
 
 
-  async getUserbyId(id:number){
+  // async getUserbyId(id:number){
 
-    const findUser = await this.userService.findOneBy({id});
+  //   const findUser = await this.userService.findOneBy({id});
 
-    if(!findUser){
-      throw new HttpException('User not found',HttpStatus.NOT_FOUND)
-    }
-    return new SerializedUser(findUser)
+  //   if(!findUser){
+  //     throw new HttpException('User not found',HttpStatus.NOT_FOUND)
+  //   }
+  //   return new SerializedUser(findUser)
 
 
-  }
+  // }
 
 
   //  CREATING A POST
@@ -181,8 +181,26 @@ export class UserService {
    
   } 
 
-  async getUserByFirstName(firstName:string){
-    return await this.userService.createQueryBuilder('user').innerJoinAndSelect('user.profile','profile').where('profile.firstName = :firstName',{firstName}).getOne()
+  async getUserByFirstName(firstName:string) :Promise<User | undefined>{
+    // return await this.userService.createQueryBuilder('user')
+    // .innerJoinAndSelect('user.profile','profile')
+    // .where('profile.firstName = :firstName',{firstName})
+    // .getOne()
+
+    // const user= await this.userService.
+
+    
+
+    try {
+      const user = await this.userService.createQueryBuilder('user').leftJoinAndSelect('user.profile','profile').where('profile.firstName = :firstName',{firstName}).getOneOrFail();
+
+    if (!user){
+      throw new HttpException('User No dey ooh',401)
+    }
+    return user
+    } catch (error) {
+      return error
+    }
   }
 
 }

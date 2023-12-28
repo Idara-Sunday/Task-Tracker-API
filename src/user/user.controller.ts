@@ -50,11 +50,11 @@ export class UserController {
     return await this.userService.getUsers();
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
-  @Get(':id')
-  async findUser(@Param('id') id: number) {
-    return await this.userService.getUserbyId(id);
-  }
+  // @UseInterceptors(ClassSerializerInterceptor)
+  // @Get(':id')
+  // async findUser(@Param('id') id: number) {
+  //   return await this.userService.getUserbyId(id);
+  // }
 
   @Post(':id/posts')
   async makePost(@Param('id') id: number, @Body() payload: PostDTO) {
