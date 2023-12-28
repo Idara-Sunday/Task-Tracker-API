@@ -182,7 +182,7 @@ export class UserService {
   } 
 
   async getUserByFirstName(firstName:string){
-    return this.userService.createQueryBuilder('user').innerJoinAndSelect('user.profile','profile').where('profile.firstName = :firstName',{firstName}).getOne()
+    return await this.userService.createQueryBuilder('user').innerJoinAndSelect('user.profile','profile').where('profile.firstName = :firstName',{firstName}).getOne()
   }
 
 }
