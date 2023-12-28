@@ -53,7 +53,7 @@ export class UserController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
   async findUser(@Param('id') id: number) {
-    return await this.userService.getUserbyFirstname(id);
+    return await this.userService.getUserbyId(id);
   }
 
   @Post(':id/posts')

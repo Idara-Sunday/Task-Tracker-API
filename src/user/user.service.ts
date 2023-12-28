@@ -112,7 +112,7 @@ export class UserService {
   }
 
 
-  async getUserbyFirstname(id:number){
+  async getUserbyId(id:number){
 
     const findUser = await this.userService.findOneBy({id});
 
