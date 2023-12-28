@@ -70,4 +70,10 @@ export class UserController {
   async deleteUser(@Param('id') id: number) {
     return await this.userService.deleteUser(id);
   }
+
+  @Get(':firstName')
+  async getUserByFirstName(@Param('firstName') firstName:string){
+    return await this.userService.getUserByFirstName(firstName)
+  }
+
 }
