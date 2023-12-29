@@ -6,7 +6,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
+import {  User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto, SerializedUser } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
@@ -14,7 +14,7 @@ import { LoginUser } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { createUserParams } from 'src/utils/types';
-import { UserProfileDTO } from './dto/user.profile.dto';
+import {  SerializedUserProfile, UserProfileDTO } from './dto/user.profile.dto';
 import { Profile } from './entities/profile.entity';
 import { PostDTO } from './dto/create-post.dto';
 import { Post } from './entities/posts.entity';
@@ -112,17 +112,17 @@ export class UserService {
   }
 
 
-  // async getUserbyId(id:number){
+  async getUserbyId(id:number){
 
-  //   const findUser = await this.userService.findOneBy({id});
+    const findUser = await this.userService.findOneBy({id});
 
-  //   if(!findUser){
-  //     throw new HttpException('User not found',HttpStatus.NOT_FOUND)
-  //   }
-  //   return new SerializedUser(findUser)
+    if(!findUser){
+      throw new HttpException('User not found',HttpStatus.NOT_FOUND)
+    }
+    return new SerializedUser(findUser)
 
 
-  // }
+  }
 
 
   //  CREATING A POST
@@ -182,25 +182,31 @@ export class UserService {
   } 
 
   async getUserByFirstName(firstName:string) :Promise<User | undefined>{
-    // return await this.userService.createQueryBuilder('user')
-    // .innerJoinAndSelect('user.profile','profile')
-    // .where('profile.firstName = :firstName',{firstName})
-    // .getOne()
+    const user = await this.userService.createQueryBuilder('user')
+    .innerJoinAndSelect('user.profile','profile')
+    .where('profile.firstName = :firstName',{firstName})
+    .getOne()
 
+    if (!user){
+    throw new HttpException('User Ibaha ooh',401)
+    }
+
+    const serialUSer = new SerializedUserProfile(user)
+    return serialUSer
     // const user= await this.userService.
 
     
 
-    try {
-      const user = await this.userService.createQueryBuilder('user').leftJoinAndSelect('user.profile','profile').where('profile.firstName = :firstName',{firstName}).getOneOrFail();
+    // try {
+    //   const user = await this.userService.createQueryBuilder('user').leftJoinAndSelect('user.profile','profile').where('profile.firstName = :firstName',{firstName}).getOneOrFail();
 
-    if (!user){
-      throw new HttpException('User No dey ooh',401)
-    }
-    return user
-    } catch (error) {
-      return error
-    }
+    // if (!user){
+    //   throw new HttpException('User No dey ooh',401)
+    // }
+    // return user
+    // } catch (error) {
+    //   return error
+    // }
   }
 
 }

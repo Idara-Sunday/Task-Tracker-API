@@ -27,24 +27,5 @@ export class User {
   @OneToMany(()=>Post,(post)=> post.user)
   post:Post[];
 
-
-
-  
-  // @Column()
-  // task_title: string;
- 
-  // @Column()
-  // task_description: string;
-
-  // @Column()
-  // task_status: string;
-
-  // @Column({
-  //   type: 'enum',
-  //   enum: Roles,
-  //   default: Roles.user,
-  // })
-  // role: Roles;
 }
-
 
