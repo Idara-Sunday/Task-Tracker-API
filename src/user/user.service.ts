@@ -161,7 +161,7 @@ export class UserService {
     })
 
     const saveComment = await this.commentRepository.save(makeComment)
-     userpost.comment =[saveComment]
+     userpost.comment = [saveComment]
 
     
    
