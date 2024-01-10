@@ -90,8 +90,8 @@ export class UserService {
       throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
     }
 
-    const newProfile = this.userProfile.create(payload);
-    const saveProfile = await this.userProfile.save(newProfile);
+    // const newProfile = this.userProfile.create(payload); 
+    const saveProfile = await this.userProfile.save(payload);
     User.profile = saveProfile;
 
     const updateUser = await this.userService.save(User);
@@ -116,7 +116,7 @@ export class UserService {
 
     const findUser = await this.userService.findOneBy({id});
 
-    if(!findUser){
+    if(!findUser){ 
       throw new HttpException('User not found',HttpStatus.NOT_FOUND)
     }
     return new SerializedUser(findUser)
