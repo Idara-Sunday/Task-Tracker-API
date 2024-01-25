@@ -35,7 +35,7 @@ export class UserService {
     // DESTRUCTURING THE INCOMING PAYLOAD
     var { email, password, ...rest } = payload;
 
-    email = email.toLocaleLowerCase();
+    email = email.toLowerCase();
 
     const checkUser = await this.userService.findOne({ where: { email } });
 
