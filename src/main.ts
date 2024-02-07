@@ -8,7 +8,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({
     whitelist:true
   }));
-  app.setGlobalPrefix('v1/api');
+  // app.setGlobalPrefix('v1/api');
   await app.listen(port,()=>{
     console.log(`server is listening on port ${port}`);
     
