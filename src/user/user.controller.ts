@@ -45,7 +45,7 @@ export class UserController {
   */
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Get()
+  @Get('/allusers')
   async getUsers() {
     return await this.userService.getUsers();
   }
