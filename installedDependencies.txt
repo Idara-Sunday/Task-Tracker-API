@@ -11,3 +11,5 @@ npm i --save @nestjs/config
 
 Inspect: https://vercel.com/idara-sunday-ekpenes-projects/cruth-with-mysql/EzCg63QAmtdJCgjRkSLVoPWDT1dA [37s]
 ✅  Production: https://cruth-with-mysql-cuc5xfgb3-idara-sunday-ekpenes-projects.vercel.app 
+ Inspect: https://vercel.com/idara-sunday-ekpenes-projects/cruth-with-mysql/9JEjkb6BbcMRFmUpCtoixqJAaD9J [2m]
+✅  Production: https://cruth-with-mysql-db18p4j35-idara-sunday-ekpenes-projects.vercel.app
