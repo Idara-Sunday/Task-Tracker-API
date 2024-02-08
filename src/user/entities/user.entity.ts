@@ -12,8 +12,8 @@ export class User {
   @CreateDateColumn()
   created_At:Date;
 
-  @UpdateDateColumn()
-  updated_At:Date;
+  // @UpdateDateColumn()
+  // updated_At:Date;
   
   @Column({unique:true})
   email: string;

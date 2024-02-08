@@ -114,7 +114,7 @@ export class UserService {
 
   async getUserbyId(id:number){
 
-    const findUser = await this.userService.findOneBy({id});
+    const findUser = await this.userService.findOne({where:{id},relations:['profile']});
 
     if(!findUser){ 
       throw new HttpException('User not found',HttpStatus.NOT_FOUND)
@@ -188,7 +188,7 @@ export class UserService {
     .getOne()
 
     if (!user){
-    throw new HttpException('User Ibaha ooh',401)
+    throw new HttpException('User Not Found',401)
     }
 
     const serialUSer = new SerializedUserProfile(user)
