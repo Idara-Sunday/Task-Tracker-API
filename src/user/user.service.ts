@@ -110,7 +110,7 @@ export class UserService {
     // return await this.userService.find()
     // return await this.userService.find({ relations: ['profile','post'] });
   }
-
+ 
 
   async getUserbyId(id:number){
 
