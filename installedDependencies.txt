@@ -1,0 +1,13 @@
+npm i --save @nestjs/config
+ npm install --save @nestjs/typeorm typeorm mysql2
+  npm i --save class-validator class-transformer
+   npm i cookie-parser
+   npm i -D @types/cookie-parser
+    npm install --save @nestjs/jwt
+    npm i bcrypt
+    npm i -D @types/bcrypt
+     Inspect: https://vercel.com/idara-sunday-ekpenes-projects/cruth-with-mysql/67iKcQHuEXAawMcdw9p7pDhGi66y [7s]
+✅  Production: https://cruth-with-mysql-d1q73i3hr-idara-sunday-ekpenes-projects.vercel.app
+
+  npm run migration:generate -- config/databaseMigration/profile-entity-update
+  npm run -- migration:run 
