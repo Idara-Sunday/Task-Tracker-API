@@ -114,7 +114,7 @@ export class UserService {
 
   async getUserbyId(id:number){
 
-    const findUser = await this.userService.findOne({where:{id},relations:['profile']});
+    const findUser = await this.userService.findOne({where:{id},relations:['profile','post']});
 
     if(!findUser){ 
       throw new HttpException('User not found',HttpStatus.NOT_FOUND)
