@@ -64,7 +64,7 @@ export class UserController {
   @Post(':id/comment')
   async makeCOmment(@Param('id') id: number, @Body() payload: CommentDTO) {
     return await this.userService.createComment(id, payload);
-  }
+  }         
 
   @Delete(':id')
   async deleteUser(@Param('id') id: number) {

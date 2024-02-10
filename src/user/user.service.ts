@@ -51,10 +51,10 @@ export class UserService {
     const saveUser = await this.userService.save({
       email,
       password: hashpassword,
-      ...rest,
+      ...rest, 
     });
     delete saveUser.password;
-
+     
     return { saveUser };
   }
 
