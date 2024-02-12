@@ -21,6 +21,7 @@ import { Post } from './entities/posts.entity';
 import { Comments } from './entities/comments.entity';
 import { CommentDTO } from './dto/comment.dto';
 import { plainToClass } from 'class-transformer';
+import { UpdateUserProfile } from './dto/update-userProfile.dto';
 
 @Injectable()
 export class UserService {
@@ -50,10 +51,10 @@ export class UserService {
 
     const saveUser = await this.userService.save({
       email,
-      password: hashpassword,
+      password: hashpassword, 
       ...rest, 
     });
-    delete saveUser.password;
+    delete saveUser.password; 
      
     return { saveUser };
   }
@@ -98,6 +99,11 @@ export class UserService {
     delete updateUser.password;
     return updateUser;
   }
+
+
+  // async updateUserProfile(profileId:number,payload:UpdateUserProfile){
+  //    const findProfile = await this.userService.fi
+  // }
 
   // FETCHING ALL USERS FROM THE DATABASE
   async getUsers() {
