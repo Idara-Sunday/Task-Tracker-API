@@ -17,6 +17,7 @@ import { SkipThrottle } from '@nestjs/throttler';
 import { UserProfileDTO } from './dto/user.profile.dto';
 import { PostDTO } from './dto/create-post.dto';
 import { CommentDTO } from './dto/comment.dto';
+import {UpdateUserProfileDTO } from './dto/update-userProfile.dto';
 
 @Controller('user')
 export class UserController {
@@ -36,6 +37,11 @@ export class UserController {
   @Post(':id/profile')
   async userProfile(@Param('id') id: number, @Body() payload: UserProfileDTO) {
     return await this.userService.createProfile(id, payload);
+  }
+
+  @Patch(':profileId/update-profile')
+  async updateProfile(@Param('profileId') profileId:number , @Body() payload:UpdateUserProfileDTO){
+     return await this.userService.updateUserProfile(profileId,payload);
   }
   /*
   @Post('createtask')

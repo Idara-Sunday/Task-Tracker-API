@@ -21,7 +21,7 @@ import { Post } from './entities/posts.entity';
 import { Comments } from './entities/comments.entity';
 import { CommentDTO } from './dto/comment.dto';
 import { plainToClass } from 'class-transformer';
-import { UpdateUserProfile } from './dto/update-userProfile.dto';
+import {  UpdateUserProfileDTO } from './dto/update-userProfile.dto';
 
 @Injectable()
 export class UserService {
@@ -101,9 +101,20 @@ export class UserService {
   }
 
 
-  // async updateUserProfile(profileId:number,payload:UpdateUserProfile){
-  //    const findProfile = await this.userService.fi
-  // }
+
+
+  async updateUserProfile(profileId:number,payload:UpdateUserProfileDTO){
+    const findProfile = await this.userProfile.findOne({where:{id:profileId}});
+
+    if(!findProfile){
+      throw new HttpException('no profile found',HttpStatus.NOT_FOUND);
+    }
+
+    const updateUserProfile = await this.userProfile.update(profileId,payload);
+    return updateUserProfile
+  }
+
+
 
   // FETCHING ALL USERS FROM THE DATABASE
   async getUsers() {
