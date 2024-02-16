@@ -1,10 +1,13 @@
-FROM node:21
+FROM node:20
 
 WORKDIR /usr/src/app
 
 
 COPY . .
 
-RUN npm install
+RUN npm install --timeout=9999999999999999999999999999999999999999999999999999999999999999999999999999999990000
+
+
+# RUN npm install
 
 CMD [ "npm","run","start:dev" ] 
